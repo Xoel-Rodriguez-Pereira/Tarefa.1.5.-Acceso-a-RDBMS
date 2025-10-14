@@ -11,13 +11,10 @@ public class Main {
         EstudiantesRepositoryImpl repository = new EstudiantesRepositoryImpl();
 
         // Mostrar todos los estudiantes
-        for (Estudiante e : repository.findAll()) {
-            System.out.println(e);
-        }
+        repository.findAll().forEach(System.out::println);
 
         // Insertar nuevo estudiante
         Estudiante estudiante = new Estudiante(
-                -1,
                 "Pepe",
                 LocalDate.parse("1990-01-01"),
                 10.0,
@@ -60,7 +57,6 @@ public class Main {
 
         // Guardar más estudiantes
         Estudiante e2 = new Estudiante(
-                -1,
                 "Eva",
                 LocalDate.parse("1990-01-01"),
                 10.0,
@@ -70,7 +66,6 @@ public class Main {
         System.out.println(r2);
 
         Estudiante e3 = new Estudiante(
-                -1,
                 "Pepe",
                 LocalDate.parse("1990-01-01"),
                 4.0,

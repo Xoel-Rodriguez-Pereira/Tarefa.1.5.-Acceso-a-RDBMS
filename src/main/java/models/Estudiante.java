@@ -30,9 +30,10 @@ public class Estudiante {
         this.updatedAt = updatedAt;
     }
 
-    // Constructor sin createdAt y updatedAt (opcional, si quieres facilidad de uso)
-    public Estudiante(int id, String nombre, LocalDate fechaNacimiento, double calificacion, boolean repetidor) {
-        this(id, nombre, fechaNacimiento, calificacion, repetidor, LocalDateTime.now(), LocalDateTime.now());
+
+    // Constructor sin id, createdAt y updatedAt (opcional, si quieres facilidad de uso)
+    public Estudiante(String nombre, LocalDate fechaNacimiento, double calificacion, boolean repetidor) {
+        this(NEW_ID, nombre, fechaNacimiento, calificacion, repetidor, LocalDateTime.now(), LocalDateTime.now());
     }
 
     // Getters y Setters

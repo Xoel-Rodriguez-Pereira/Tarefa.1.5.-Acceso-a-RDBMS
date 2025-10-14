@@ -6,8 +6,10 @@ import database.DatabaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -63,7 +65,7 @@ public class EstudiantesRepositoryImpl implements EstudiantesRepository {
                 timeStamp
         );
 
-        int id = (int) generatedId; // Ajusta el cast según tipo devuelto
+        int id = ((BigInteger) generatedId).intValue(); // Ajusta el cast según tipo devuelto
         return new Estudiante(
                 id,
                 item.getNombre(),
@@ -263,8 +265,8 @@ public class EstudiantesRepositoryImpl implements EstudiantesRepository {
                 LocalDate.parse((String) entity.get("fecha_nacimiento")),
                 (double) entity.get("calificacion"),
                 ((int) entity.get("repetidor")) == 1,
-                LocalDateTime.parse((String) entity.get("created_at")),
-                LocalDateTime.parse((String) entity.get("updated_at"))
+                LocalDateTime.parse(((String) entity.get("created_at")).replace(' ','T')), // DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSS")),
+                LocalDateTime.parse(((String) entity.get("updated_at")).replace(' ','T')) // DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSS"))
         );
     }
 }

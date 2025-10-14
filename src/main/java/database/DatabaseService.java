@@ -11,6 +11,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.*;
 
@@ -44,8 +48,13 @@ public class DatabaseService implements DatabaseManager {
 
     private void initTablas() {
         logger.debug("Creando tablas");
-        try (Reader tablas = new BufferedReader(new InputStreamReader(
-                ClassLoader.getSystemResourceAsStream("tables.sql")))) {
+        try {
+            URL resourceUrl = ClassLoader.getSystemResource("tables.sql");
+            Path path = Paths.get(resourceUrl.toURI());
+            String tables = Files.readString(path);
+            PreparedStatement statement = connection.prepareStatement(tables);
+            statement.executeUpdate();
+
             logger.debug("Tabla estudiantes creada");
         } catch (Exception e) {
             logger.error("Error al crear las tablas: " + e.getMessage());
@@ -54,8 +63,12 @@ public class DatabaseService implements DatabaseManager {
 
     private void initData() {
         logger.debug("Iniciando carga de datos");
-        try (Reader data = new BufferedReader(new InputStreamReader(
-                ClassLoader.getSystemResourceAsStream("data.sql")))) {
+        try {
+            URL resourceUrl = ClassLoader.getSystemResource("data.sql");
+            Path path = Paths.get(resourceUrl.toURI());
+            String data = Files.readString(path);
+            PreparedStatement statement = connection.prepareStatement(data);
+            statement.executeUpdate();
             logger.debug("Datos cargados");
         } catch (Exception e) {
             logger.error("Error al cargar los datos: " + e.getMessage());
