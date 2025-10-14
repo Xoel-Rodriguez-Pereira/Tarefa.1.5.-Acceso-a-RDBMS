@@ -1,4 +1,4 @@
-package dev.joseluisgs.models;
+package models;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

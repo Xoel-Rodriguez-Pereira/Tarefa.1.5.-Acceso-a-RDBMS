@@ -1,4 +1,4 @@
-package dev.joseluisgs.database;
+package database;
 
 import java.util.List;
 import java.util.Map;

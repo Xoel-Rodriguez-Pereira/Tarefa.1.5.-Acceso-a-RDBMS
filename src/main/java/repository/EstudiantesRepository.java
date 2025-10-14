@@ -1,10 +1,10 @@
-package dev.joseluisgs.repositories;
+package repository;
 
-import dev.joseluisgs.models.Estudiante;
+import models.Estudiante;
 
 import java.util.List;
 
-public interface EstudiantesRepository extends CrudRepository<Estudiante, Integer> {
+public interface EstudiantesRepository extends CrudRepository<Estudiante> {
     List<Estudiante> findAllPaginated(int page, int size);
     List<Estudiante> findByNombre(String nombre);
     List<Estudiante> findByCalificacion(double calificacion);

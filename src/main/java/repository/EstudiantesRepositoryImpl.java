@@ -1,10 +1,10 @@
-package dev.joseluisgs.repositories;
+package repository;
 
-import dev.joseluisgs.database.DatabaseManager;
-import dev.joseluisgs.models.Estudiante;
+import database.DatabaseManager;
+import models.Estudiante;
 import database.DatabaseService;
-import org.lighthousegames.logging.Logger;
-import org.lighthousegames.logging.Logging;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 public class EstudiantesRepositoryImpl implements EstudiantesRepository {
 
     private final DatabaseManager db;
-    private final Logger logger = Logging.getLogger();
+
+    private final Logger logger = LoggerFactory.getLogger(EstudiantesRepositoryImpl.class.getName());
 
     public EstudiantesRepositoryImpl() {
         this.db = new DatabaseService();
@@ -25,7 +26,6 @@ public class EstudiantesRepositoryImpl implements EstudiantesRepository {
         this.db = db;
     }
 
-    @Override
     public List<Estudiante> findAll() {
         logger.debug("Buscando todos los estudiantes");
 
@@ -35,7 +35,6 @@ public class EstudiantesRepositoryImpl implements EstudiantesRepository {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public Estudiante findById(int id) {
         logger.debug("Buscando estudiante por id: " + id);
 
@@ -47,7 +46,6 @@ public class EstudiantesRepositoryImpl implements EstudiantesRepository {
         return toModel(result.get(0));
     }
 
-    @Override
     public Estudiante save(Estudiante item) {
         logger.debug("Guardando estudiante: " + item);
 
@@ -77,7 +75,6 @@ public class EstudiantesRepositoryImpl implements EstudiantesRepository {
         );
     }
 
-    @Override
     public Estudiante update(int id, Estudiante item) {
         logger.debug("Actualizando estudiante por id: " + id);
 
@@ -115,7 +112,6 @@ public class EstudiantesRepositoryImpl implements EstudiantesRepository {
         );
     }
 
-    @Override
     public Estudiante delete(int id) {
         logger.debug("Borrando estudiante por id: " + id);
 

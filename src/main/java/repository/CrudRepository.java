@@ -1,11 +1,11 @@
-package dev.joseluisgs.repositories;
+package repository;
 
 import java.util.List;
 
-public interface CrudRepository<T, ID> {
+public interface CrudRepository<T> {
     List<T> findAll();
-    T findById(ID id);
+    T findById(int id);
     T save(T item);
-    T update(ID id, T item);
-    T delete(ID id);
+    T update(int id, T item);
+    T delete(int id);
 }

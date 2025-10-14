@@ -1,9 +1,11 @@
 package database;
 
-import dev.joseluisgs.config.Config;
-import dev.joseluisgs.database.DatabaseManager;
-import org.apache.ibatis.jdbc.ScriptRunner;
-import org.lighthousegames.logging.Logger;
+import config.Config;
+import database.DatabaseManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import repository.EstudiantesRepositoryImpl;
+
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,7 +15,8 @@ import java.sql.*;
 import java.util.*;
 
 public class DatabaseService implements DatabaseManager {
-    private static final Logger logger = Logger.Companion.logging();
+
+    private final Logger logger = LoggerFactory.getLogger(DatabaseService.class.getName());
 
     private Connection connection = null;
 
@@ -31,7 +34,7 @@ public class DatabaseService implements DatabaseManager {
         logger.debug("Iniciando conexión con la base de datos");
         try {
             if (connection == null || connection.isClosed()) {
-                connection = DriverManager.getConnection(Config.getDatabaseUrl());
+                connection = DriverManager.getConnection(Config.getDatabaseUrl(), Config.getDatabaseUser(), Config.getDatabasePassword());
             }
             logger.debug("Conexión con la base de datos inicializada");
         } catch (SQLException e) {
@@ -43,7 +46,6 @@ public class DatabaseService implements DatabaseManager {
         logger.debug("Creando tablas");
         try (Reader tablas = new BufferedReader(new InputStreamReader(
                 ClassLoader.getSystemResourceAsStream("tables.sql")))) {
-            scriptRunner(tablas, true);
             logger.debug("Tabla estudiantes creada");
         } catch (Exception e) {
             logger.error("Error al crear las tablas: " + e.getMessage());
@@ -54,21 +56,9 @@ public class DatabaseService implements DatabaseManager {
         logger.debug("Iniciando carga de datos");
         try (Reader data = new BufferedReader(new InputStreamReader(
                 ClassLoader.getSystemResourceAsStream("data.sql")))) {
-            scriptRunner(data, true);
             logger.debug("Datos cargados");
         } catch (Exception e) {
             logger.error("Error al cargar los datos: " + e.getMessage());
-        }
-    }
-
-    private void scriptRunner(Reader reader, boolean logWriter) {
-        logger.debug("Ejecutando script SQL con log: " + logWriter);
-        try {
-            ScriptRunner sr = new ScriptRunner(connection);
-            sr.setLogWriter(logWriter ? new PrintWriter(System.out) : null);
-            sr.runScript(reader);
-        } catch (Exception e) {
-            logger.error("Error al ejecutar el script SQL: " + e.getMessage());
         }
     }
 
@@ -137,5 +127,39 @@ public class DatabaseService implements DatabaseManager {
     }
 
     @Override
-    public int update(String sql, Object... params) {
-        logger.debug("Ejecutando actualización:
+    public int update(String query, Object... params) {
+        logger.debug("Ejecutando actualización: " + query);
+        int result = 0;
+        initConexion();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            setParameters(statement, params);
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Error al actualizar: " + e.getMessage());
+        }
+        logger.debug("Actualización finalizada con " + result + " filas afectadas");
+        return result;
+    }
+
+    @Override
+    public int delete(String query, Object... params) {
+        logger.debug("Ejecutando borrado: " + query);
+        int result = 0;
+        initConexion();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            setParameters(statement, params);
+            result = statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Error al borrar: " + e.getMessage());
+        }
+        logger.debug("Borrado finalizado con " + result + " filas afectadas");
+        return result;
+    }
+
+    private void setParameters(PreparedStatement statement, Object[] params) throws SQLException {
+        logger.debug("Pasando parámetros a la consulta: " + Arrays.toString(params));
+        for (int i = 0; i < params.length; i++) {
+            statement.setObject(i + 1, params[i]);
+        }
+    }
+}

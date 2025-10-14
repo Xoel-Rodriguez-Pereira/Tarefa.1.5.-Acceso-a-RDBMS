@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS estudiantes (
-   id INTEGER PRIMARY KEY,
+   id INTEGER AUTO_INCREMENT PRIMARY KEY,
    nombre TEXT NOT NULL,
    fecha_nacimiento TEXT NOT NULL,
    calificacion REAL NOT NULL DEFAULT 0.0,
