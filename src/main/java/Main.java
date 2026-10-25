@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         PaisesRepositoryImpl repository = new PaisesRepositoryImpl();
 
-        // Mostrar todos los estudiantes
+        // Mostrar todos los paises
         repository.findAll().forEach(System.out::println);
 
         // Insertar nuevo estudiante
@@ -34,7 +34,7 @@ public class Main {
         Pais pais5 = repository.findById(99);
         System.out.println(pais5 != null ? pais5 : "No encontrado");
 
-        // Actualizar estudiante
+        // Actualizar pais
         Pais pais4 = new Pais(
                 99,
                 "Demo_Update",
@@ -47,14 +47,14 @@ public class Main {
         Pais res2 = repository.update(1, pais4);
         System.out.println(res2 != null ? res2 : "No encontrado");
 
-        // Eliminar estudiante
+        // Eliminar pais
         Pais res3 = repository.delete(2);
         System.out.println(res3 != null ? res3 : "No encontrado");
 
         // Mostrar todos
         repository.findAll().forEach(System.out::println);
 
-        // Guardar más estudiantes
+        // Guardar más paises
         Pais e2 = new Pais(
                 "Francia",
                 987,
@@ -89,7 +89,7 @@ public class Main {
         System.out.println(repository.maximaPoblacion());
         System.out.println(repository.minimaPoblacion());
 
-        // Todos los estudiantes
+        // Todos los paises
         repository.findAll().forEach(System.out::println);
 
         // Paginación
