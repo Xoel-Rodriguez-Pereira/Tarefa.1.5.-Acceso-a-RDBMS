@@ -1,4 +1,4 @@
-DELETE
+DELETE * 
 FROM estudiantes;
 
 INSERT INTO estudiantes (nombre, fecha_nacimiento, calificacion, repetidor, created_at, updated_at)

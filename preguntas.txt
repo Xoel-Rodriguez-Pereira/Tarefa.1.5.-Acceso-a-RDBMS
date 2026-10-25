@@ -1,0 +1,23 @@
+¿Qué clase utiliza el fichero config.properties? ¿Con qué finalidad? ¿Por qué el método getProperty recibe dos valores?
+Config.java
+Necesita una clave y un valor por defecto que devuelve en caso de no encontrar la propiedad asociada a la clave
+
+
+¿Qué clase utiliza objetos de tipo Connection, Statement y ResultSet? ¿Con qué finalidad?
+DatabaseService.java
+Conectarse a la base de datos y realizar operaciones de lectura o escritura sobre ella.
+
+
+¿Qué estructura de datos utiliza la clase EstudiantesRepositoryImpl?
+Listas de objetos de tipo Estudiante
+
+
+Si queremos un nuevo método de búsqueda de estudiantes, ¿Dónde lo introducideremos?
+En EstudiantesRepository.java y en EstudiantesRepositoryImpl.java
+
+
+¿Cómo se gestionan los ids? ¿A nivel de bd o código? ¿Cómo se adaptaría el código para trabajar con UUIDs?
+Se gestionan a nivel base de datos, son autoincrementables
+Para trabajar con UUIDs tendria que generarse uno aleatorio al momento de guardar un Estudiante y comprobarse que no está repetido
+(en la clase EstudiantesRepositoryImpl.java). Además habria que modificar la base de datos.
+
