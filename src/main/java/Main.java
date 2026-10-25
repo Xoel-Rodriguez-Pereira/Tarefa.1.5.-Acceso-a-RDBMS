@@ -1,96 +1,93 @@
 
 
-import models.Estudiante;
-import repository.EstudiantesRepositoryImpl;
-
-import java.time.LocalDate;
 import java.util.List;
+
+import models.Pais;
+import repository.PaisesRepositoryImpl;
 
 public class Main {
     public static void main(String[] args) {
-        EstudiantesRepositoryImpl repository = new EstudiantesRepositoryImpl();
+        PaisesRepositoryImpl repository = new PaisesRepositoryImpl();
 
         // Mostrar todos los estudiantes
         repository.findAll().forEach(System.out::println);
 
         // Insertar nuevo estudiante
-        Estudiante estudiante = new Estudiante(
-                "Pepe",
-                LocalDate.parse("1990-01-01"),
-                10.0,
-                false
+        Pais pais = new Pais(
+                "España", 
+                1492, 
+                49801559l, 
+                "Europa"
         );
-        Estudiante res = repository.save(estudiante);
+        Pais res = repository.save(pais);
         System.out.println(res);
 
         repository.findAll().forEach(System.out::println);
 
         // Buscar por ID
-        Estudiante estudiante2 = repository.findById(1);
-        System.out.println(estudiante2 != null ? estudiante2 : "No encontrado");
+        Pais pais2 = repository.findById(1);
+        System.out.println(pais2 != null ? pais2 : "No encontrado");
 
-        Estudiante estudiante3 = repository.findById(2);
-        System.out.println(estudiante3 != null ? estudiante3 : "No encontrado");
+        Pais pais3 = repository.findById(2);
+        System.out.println(pais3 != null ? pais3 : "No encontrado");
 
-        Estudiante estudiante5 = repository.findById(99);
-        System.out.println(estudiante5 != null ? estudiante5 : "No encontrado");
+        Pais pais5 = repository.findById(99);
+        System.out.println(pais5 != null ? pais5 : "No encontrado");
 
         // Actualizar estudiante
-        Estudiante estudiante4 = new Estudiante(
+        Pais pais4 = new Pais(
                 99,
                 "Demo_Update",
-                estudiante.getFechaNacimiento(),
-                5.0,
-                estudiante.isRepetidor(),
-                estudiante.getCreatedAt(),
-                estudiante.getUpdatedAt()
+                pais.getFundacion(),
+                5l,
+                pais.getContinente(),
+                pais.getCreatedAt(),
+                pais.getUpdatedAt()
         );
-        Estudiante res2 = repository.update(1, estudiante4);
+        Pais res2 = repository.update(1, pais4);
         System.out.println(res2 != null ? res2 : "No encontrado");
 
         // Eliminar estudiante
-        Estudiante res3 = repository.delete(2);
+        Pais res3 = repository.delete(2);
         System.out.println(res3 != null ? res3 : "No encontrado");
 
         // Mostrar todos
         repository.findAll().forEach(System.out::println);
 
         // Guardar más estudiantes
-        Estudiante e2 = new Estudiante(
-                "Eva",
-                LocalDate.parse("1990-01-01"),
-                10.0,
-                false
+        Pais e2 = new Pais(
+                "Francia",
+                987,
+                68882600l,
+                "Europa"
         );
-        Estudiante r2 = repository.save(e2);
+        Pais r2 = repository.save(e2);
         System.out.println(r2);
 
-        Estudiante e3 = new Estudiante(
-                "Pepe",
-                LocalDate.parse("1990-01-01"),
-                4.0,
-                true
+        Pais e3 = new Pais(
+                "Alemania",
+                1326,
+                58282600l,
+                "Europa"
         );
-        Estudiante r3 = repository.save(e3);
+        Pais r3 = repository.save(e3);
 
         repository.findAll().forEach(System.out::println);
 
         // Buscar por nombre
-        List<Estudiante> byNombre = repository.findByNombre("Pepe");
+        List<Pais> byNombre = repository.findByNombre("Pepe");
         byNombre.forEach(System.out::println);
 
         // Buscar por calificación
-        repository.findByCalificacion(10.0).forEach(System.out::println);
+        repository.findByPoblacion(58282600l).forEach(System.out::println);
 
         // Buscar por repetidor
-        repository.findByRepetidor(false).forEach(System.out::println);
+        repository.findByContinente("Europa").forEach(System.out::println);
 
         // Estadísticas
-        System.out.println(repository.mediaCalificaciones());
-        System.out.println(repository.maximaCalificacion());
-        System.out.println(repository.minimaCalificacion());
-        System.out.println(repository.numAprobados());
-        System.out.println(repository.numSuspensos());
+        System.out.println(repository.mediaPoblaciones());
+        System.out.println(repository.maximaPoblacion());
+        System.out.println(repository.minimaPoblacion());
 
         // Todos los estudiantes
         repository.findAll().forEach(System.out::println);

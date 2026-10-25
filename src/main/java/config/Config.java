@@ -1,15 +1,15 @@
 package config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.InputStream;
 import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Config {
     private static final Logger logger = LoggerFactory.getLogger(Config.class.getName());
     // Valores por defecto
-    private static String databaseUrl = "jdbc:mysql:alumnado.db";
+    private static String databaseUrl = "jdbc:mysql:paisesMundo.db";
     private static boolean databaseInitTables = true;
     private static boolean databaseInitData = true;
     private static String storageData = "data";

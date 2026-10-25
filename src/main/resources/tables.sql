@@ -1,9 +1,9 @@
-CREATE TABLE IF NOT EXISTS estudiantes (
+CREATE TABLE IF NOT EXISTS Paises (
    id INTEGER AUTO_INCREMENT PRIMARY KEY,
    nombre TEXT NOT NULL,
-   fecha_nacimiento TEXT NOT NULL,
-   calificacion REAL NOT NULL DEFAULT 0.0,
-   repetidor INTEGER NOT NULL DEFAULT 0,
+   fundacion INTEGER NOT NULL DEFAULT 0,
+   poblacion BIGINT NOT NULL DEFAULT 0,
+   continente TEXT NOT NULL,
    created_at TEXT NOT NULL,
    updated_at TEXT NOT NULL
 );
